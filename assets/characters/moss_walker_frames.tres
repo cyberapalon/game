@@ -1,0 +1,121 @@
+[gd_resource type="SpriteFrames" load_steps=18 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/moss_walker_sheet.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="idle0"]
+atlas = ExtResource("1")
+region = Rect2(42, 29, 304, 216)
+filter_clip = true
+margin = Rect2(42, 24, 80, 40)
+
+
+[sub_resource type="AtlasTexture" id="idle1"]
+atlas = ExtResource("1")
+region = Rect2(426, 28, 302, 216)
+filter_clip = true
+margin = Rect2(42, 24, 82, 40)
+
+
+[sub_resource type="AtlasTexture" id="idle2"]
+atlas = ExtResource("1")
+region = Rect2(803, 26, 311, 218)
+filter_clip = true
+margin = Rect2(35, 22, 73, 38)
+
+
+[sub_resource type="AtlasTexture" id="idle3"]
+atlas = ExtResource("1")
+region = Rect2(1189, 30, 308, 214)
+filter_clip = true
+margin = Rect2(37, 26, 76, 42)
+
+
+[sub_resource type="AtlasTexture" id="move0"]
+atlas = ExtResource("1")
+region = Rect2(39, 281, 313, 219)
+filter_clip = true
+margin = Rect2(39, 21, 71, 37)
+
+
+[sub_resource type="AtlasTexture" id="move1"]
+atlas = ExtResource("1")
+region = Rect2(420, 284, 310, 217)
+filter_clip = true
+margin = Rect2(36, 23, 74, 39)
+
+
+[sub_resource type="AtlasTexture" id="move2"]
+atlas = ExtResource("1")
+region = Rect2(800, 289, 318, 212)
+filter_clip = true
+margin = Rect2(32, 28, 66, 44)
+
+
+[sub_resource type="AtlasTexture" id="move3"]
+atlas = ExtResource("1")
+region = Rect2(1193, 282, 304, 218)
+filter_clip = true
+margin = Rect2(41, 22, 80, 38)
+
+
+[sub_resource type="AtlasTexture" id="hit0"]
+atlas = ExtResource("1")
+region = Rect2(46, 526, 314, 229)
+filter_clip = true
+margin = Rect2(46, 11, 70, 27)
+
+
+[sub_resource type="AtlasTexture" id="hit1"]
+atlas = ExtResource("1")
+region = Rect2(416, 520, 307, 234)
+filter_clip = true
+margin = Rect2(32, 6, 77, 22)
+
+
+[sub_resource type="AtlasTexture" id="hit2"]
+atlas = ExtResource("1")
+region = Rect2(809, 527, 315, 227)
+filter_clip = true
+margin = Rect2(41, 13, 69, 29)
+
+
+[sub_resource type="AtlasTexture" id="hit3"]
+atlas = ExtResource("1")
+region = Rect2(1192, 543, 304, 212)
+filter_clip = true
+margin = Rect2(40, 28, 80, 44)
+
+
+[sub_resource type="AtlasTexture" id="death0"]
+atlas = ExtResource("1")
+region = Rect2(24, 798, 330, 198)
+filter_clip = true
+margin = Rect2(24, 42, 54, 58)
+
+
+[sub_resource type="AtlasTexture" id="death1"]
+atlas = ExtResource("1")
+region = Rect2(417, 796, 336, 205)
+filter_clip = true
+margin = Rect2(33, 35, 48, 51)
+
+
+[sub_resource type="AtlasTexture" id="death2"]
+atlas = ExtResource("1")
+region = Rect2(785, 801, 351, 201)
+filter_clip = true
+margin = Rect2(17, 39, 33, 55)
+
+
+[sub_resource type="AtlasTexture" id="death3"]
+atlas = ExtResource("1")
+region = Rect2(1166, 796, 348, 206)
+filter_clip = true
+margin = Rect2(14, 34, 36, 50)
+
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("idle0")}, {"duration": 1.0, "texture": SubResource("idle1")}, {"duration": 1.0, "texture": SubResource("idle2")}, {"duration": 1.0, "texture": SubResource("idle3")}], "loop": true, "name": &"idle", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("move0")}, {"duration": 1.0, "texture": SubResource("move1")}, {"duration": 1.0, "texture": SubResource("move2")}, {"duration": 1.0, "texture": SubResource("move3")}], "loop": true, "name": &"move", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("hit0")}, {"duration": 1.0, "texture": SubResource("hit1")}, {"duration": 1.0, "texture": SubResource("hit2")}, {"duration": 1.0, "texture": SubResource("hit3")}], "loop": false, "name": &"hit", "speed": 16.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("death0")}, {"duration": 1.0, "texture": SubResource("death1")}, {"duration": 1.0, "texture": SubResource("death2")}, {"duration": 1.0, "texture": SubResource("death3")}], "loop": false, "name": &"death", "speed": 10.0}]

@@ -19,11 +19,26 @@ var _dead: bool = false
 
 @onready var health: HealthComponent = %Health
 @onready var _contact: Area2D = %Contact
+@onready var _sprite: AnimatedSprite2D = %Sprite
 
 
 func _ready() -> void:
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
+	_sprite.play(&"idle")
+
+
+func _process(_delta: float) -> void:
+	_sprite.flip_h = _direction < 0.0
+	var animation: StringName = &"idle"
+	if _state == State.STUNNED:
+		animation = &"hit"
+	elif absf(velocity.x) > 15.0:
+		animation = &"move"
+	if _sprite.animation != animation:
+		_sprite.play(animation)
+	_sprite.speed_scale = 1.8 if _state == State.LUNGE else 1.0
+	_sprite.modulate = Color("ffe0a5") if _state == State.WINDUP else Color.WHITE
 
 
 func _physics_process(delta: float) -> void:
@@ -98,41 +113,8 @@ func _on_died() -> void:
 
 
 func _draw() -> void:
-	var shell := Color("658b7b")
-	if health.immunity > 0.0:
-		shell = Color("f0e4b5")
-	var bob := sin(_time * 9.0) * 1.3
-	for index in range(3):
-		var x := -18.0 + index * 18.0
-		var wave := sin(_time * 12.0 + index * 1.8) * 5.0
-		draw_line(Vector2(x, -14), Vector2(x + wave - 6, -2), Color("8d9d83"), 3.0, true)
-	draw_circle(Vector2(0, -22 + bob), 26, Color("213c42"))
-	draw_colored_polygon(
-		PackedVector2Array(
-			[
-				Vector2(-28, -16),
-				Vector2(-23, -36 + bob),
-				Vector2(-9, -47 + bob),
-				Vector2(11, -44 + bob),
-				Vector2(27, -27),
-				Vector2(27, -16)
-			]
-		),
-		shell
-	)
-	for index in range(3):
-		var x := -15.0 + index * 13.0
-		draw_line(Vector2(x, -35), Vector2(x + 5, -19), Color("3c625c"), 1.5, true)
-	draw_circle(Vector2(_direction * 22, -22), 9, Color("29474a"))
-	var eye := Color("ffd48b") if _state == State.WINDUP else Color("e7b981")
-	draw_circle(Vector2(_direction * 27, -25), 3.0, eye)
-	for index in range(4):
-		var x := -17.0 + index * 10.0
-		draw_line(
-			Vector2(x, -39), Vector2(x - 3, -53 - sin(index * 3.0) * 4), Color("739d79"), 2.0, true
-		)
 	if _state == State.WINDUP:
-		draw_arc(Vector2(0, -24), 37, PI, TAU, 24, Color(0.95, 0.54, 0.35, 0.8), 2.0, true)
+		draw_arc(Vector2(0, -24), 42, PI, TAU, 24, Color(0.95, 0.54, 0.35, 0.8), 2.0, true)
 		draw_line(Vector2(0, -73), Vector2(0, -64), Color("f2b27b"), 3.0, true)
 		draw_circle(Vector2(0, -59), 1.8, Color("f2b27b"))
 	if health.current < health.maximum:

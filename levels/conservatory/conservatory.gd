@@ -4,6 +4,13 @@ extends Node2D
 const PLATFORM_SCRIPT := preload("res://levels/conservatory/stone_platform.gd")
 const BACKDROP_SCRIPT := preload("res://levels/conservatory/backdrop.gd")
 const EFFECTS_SCRIPT := preload("res://common/effects.gd")
+const HOME_ART := preload("res://assets/environment/prop_0_3.tres")
+const SEED_ART := preload("res://assets/environment/prop_1_3.tres")
+const FERN_ART := preload("res://assets/environment/prop_0_2.tres")
+const MUSHROOM_ART := preload("res://assets/environment/prop_1_2.tres")
+const COLUMN_ART := preload("res://assets/environment/prop_3_2.tres")
+const ARCH_ART := preload("res://assets/environment/prop_2_3.tres")
+const FLOWER_ART := preload("res://assets/environment/prop_3_3.tres")
 const SHRINE := Vector2(2520, 540)
 const BEACON := Vector2(290, 520)
 const PLATFORMS: Array[Rect2] = [
@@ -180,17 +187,22 @@ func _on_progress_changed() -> void:
 	queue_redraw()
 
 
-func _on_effect(kind: StringName, at: Vector2, _direction: float) -> void:
+func _on_effect(kind: StringName, at: Vector2, direction: float) -> void:
 	Sound.play(kind)
 	match kind:
 		&"trail":
-			_effects.trail(at)
+			_effects.trail(at, direction)
 		&"jump", &"land":
 			_effects.burst(at, Color("99b69a"), 7, 90.0)
+			_effects.animate(&"dust", at)
+		&"swing":
+			_effects.animate(&"slash", at + Vector2(direction * 29, -4), direction)
 		&"dash":
 			_effects.burst(at, Color("8ce2c7"), 13, 180.0)
+			_effects.animate(&"dash", at, direction)
 		&"hit":
 			_effects.burst(at, Color("e9cd88"), 15, 230.0)
+			_effects.animate(&"impact", at)
 			_trauma = minf(1.0, _trauma + 0.38)
 			_hit_stop()
 		&"hurt", &"death":
@@ -198,6 +210,7 @@ func _on_effect(kind: StringName, at: Vector2, _direction: float) -> void:
 			_trauma = minf(1.0, _trauma + 0.6)
 		&"enemy_death":
 			_effects.burst(at, Color("b8cf96"), 30, 230.0)
+			_effects.enemy_death(at + Vector2(0, 22), direction)
 			_trauma = minf(1.0, _trauma + 0.5)
 		&"pickup", &"beacon":
 			_effects.burst(at, Color("f0d39a"), 45, 270.0)
@@ -283,6 +296,10 @@ func _draw() -> void:
 	# Original mushrooms and ferns placed away from landing edges.
 	for x in [90, 440, 700, 1100, 1620, 1930, 2320, 2720]:
 		_draw_plant(Vector2(x, 840), float(x) * 0.01)
+	for x in [45, 1690, 2770]:
+		draw_texture_rect(COLUMN_ART, Rect2(x - 60, 651, 120, 189), false, Color(0.65, 0.78, 0.75))
+	draw_texture_rect(ARCH_ART, Rect2(1635, 615, 180, 225), false, Color(0.58, 0.72, 0.69))
+	draw_texture_rect(FLOWER_ART, Rect2(2360, 773, 76, 67), false)
 	for index in range(64):
 		var x := fposmod(index * 137.53 + sin(_time * 0.19 + index) * 24.0, 2800.0)
 		var y := 250.0 + fposmod(index * 83.7 - _time * (4.0 + index % 3), 650.0)
@@ -311,41 +328,37 @@ func _draw() -> void:
 
 
 func _draw_sanctuary(at: Vector2, active: bool, seed: bool) -> void:
-	var gold := Color("cbb782")
+	var art: Texture2D = SEED_ART if seed and active else HOME_ART
+	draw_texture_rect(art, Rect2(at - Vector2(80, 165), Vector2(160, 165)), false)
 	var glow := Color("9edfc1") if seed else Color("edcb87")
-	draw_rect(Rect2(at + Vector2(-33, -12), Vector2(66, 12)), Color("455e58"))
-	draw_rect(Rect2(at + Vector2(-23, -28), Vector2(46, 16)), Color("334d4c"))
-	draw_line(at + Vector2(-21, -28), at + Vector2(-28, -105), gold, 2.0, true)
-	draw_line(at + Vector2(21, -28), at + Vector2(28, -105), gold, 2.0, true)
-	draw_arc(at + Vector2(0, -80), 39.0, PI * 1.03, TAU - 0.1, 30, gold, 2.0, true)
-	var center := at + Vector2(0, -65 + sin(_time * 2.0) * 4.0)
+	var center := at + Vector2(0, -76 + sin(_time * 2.0) * 2.0)
 	if active:
 		for index in range(5, 0, -1):
 			var color := glow
-			color.a = 0.015 + (5 - index) * 0.006
-			draw_circle(center, index * 22.0, color)
-		var points := PackedVector2Array(
-			[
-				center + Vector2(0, -22),
-				center + Vector2(12, 0),
-				center + Vector2(0, 22),
-				center + Vector2(-12, 0)
-			]
-		)
-		draw_colored_polygon(points, glow)
-		draw_line(center + Vector2(0, -14), center + Vector2(0, 14), Color("f7f1c8"), 1.8, true)
-	else:
-		draw_arc(center, 16, 0, TAU, 24, Color("536d64"), 1.5, true)
+			color.a = 0.012 + (5 - index) * 0.006
+			draw_circle(center, index * 21.0, color)
+		if not seed:
+			draw_colored_polygon(
+				PackedVector2Array(
+					[
+						center + Vector2(0, -18),
+						center + Vector2(10, 0),
+						center + Vector2(0, 18),
+						center + Vector2(-10, 0)
+					]
+				),
+				glow
+			)
 	var label := "WINDSEED" if seed else "THE HOME LANTERN"
 	var width := ThemeDB.fallback_font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 	draw_string(
 		ThemeDB.fallback_font,
-		at + Vector2(-width / 2, -131),
+		at + Vector2(-width / 2, -177),
 		label,
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
 		12,
-		Color("9baf98")
+		Color("a7b89b")
 	)
 
 
@@ -368,14 +381,7 @@ func _draw_sign(at: Vector2, text: String, right: bool) -> void:
 
 
 func _draw_plant(at: Vector2, phase: float) -> void:
-	var sway := 0.0 if Progress.reduced_motion else sin(_time * 1.2 + phase) * 3.0
-	for index in range(5):
-		var height := 24.0 + sin(index * 4.1 + phase) * 14.0
-		var tip := at + Vector2((index - 2) * 11 + sway, -height)
-		draw_line(at + Vector2((index - 2) * 4, 0), tip, Color("3d6b5b"), 2.0, true)
-		draw_line(tip + Vector2(0, 7), tip + Vector2(-8, 0), Color("669372"), 2.0, true)
-		draw_line(tip + Vector2(0, 13), tip + Vector2(8, 5), Color("669372"), 2.0, true)
-	var cap := at + Vector2(18, -38)
-	draw_line(cap, at + Vector2(18, -2), Color("91b796"), 2.0, true)
-	draw_arc(cap, 14, PI, TAU, 20, Color("87bca0"), 6.0, true)
-	draw_circle(cap + Vector2(0, -6), 24, Color(0.4, 0.8, 0.6, 0.035))
+	var sway := 0.0 if Progress.reduced_motion else sin(_time * 1.2 + phase) * 1.4
+	draw_texture_rect(FERN_ART, Rect2(at + Vector2(-47 + sway, -64), Vector2(81, 64)), false)
+	draw_texture_rect(MUSHROOM_ART, Rect2(at + Vector2(7, -66), Vector2(60, 66)), false)
+	draw_circle(at + Vector2(34, -38), 31, Color(0.4, 0.8, 0.6, 0.028))

@@ -18,3 +18,7 @@ coverage/
 .idea/
 *.swp
 *.tmp
+
+# Offline art resource builder
+__pycache__/
+*.py[cod]

@@ -33,12 +33,35 @@ var _jump_cut: bool = false
 
 @onready var health: HealthComponent = %Health
 @onready var _attack: Area2D = %Attack
+@onready var _sprite: AnimatedSprite2D = %Sprite
 
 
 func _ready() -> void:
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	_attack.body_entered.connect(_hit_enemy)
+	_sprite.play(&"idle")
+
+
+func _process(_delta: float) -> void:
+	_sprite.visible = not dead
+	if health.immunity > 0.0 and int(_animation_time * 16.0) % 2 == 0:
+		_sprite.modulate.a = 0.35
+	else:
+		_sprite.modulate.a = 1.0
+	_sprite.scale = Vector2.ONE * 0.28 * _squash
+	_sprite.flip_h = (_attack_direction if _attack_time > 0.0 else facing) < 0.0
+	var animation: StringName = &"idle"
+	if dash_remaining > 0.0:
+		animation = &"dash"
+	elif _attack_time > 0.0:
+		animation = &"attack"
+	elif not is_on_floor():
+		animation = &"jump" if velocity.y < 0.0 else &"fall"
+	elif absf(velocity.x) > 20.0:
+		animation = &"run"
+	if _sprite.animation != animation:
+		_sprite.play(animation)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -205,63 +228,9 @@ func respawn(at: Vector2, refill: bool = true) -> void:
 func _draw() -> void:
 	if dead:
 		return
-	if health.immunity > 0.0 and int(_animation_time * 16.0) % 2 == 0:
-		return
-	var bob := sin(_animation_time * 3.0) * 1.4
-	var stride := sin(_animation_time * 17.0) * minf(absf(velocity.x) / speed, 1.0)
-	draw_circle(Vector2(0, -24), 46.0, Color(0.40, 0.85, 0.72, 0.035))
-	draw_circle(Vector2(0, -24), 29.0, Color(0.40, 0.85, 0.72, 0.065))
-	draw_set_transform(Vector2(0, bob), 0.0, _squash)
-	# The keeper is a seed lantern in a small woven cloak, not a borrowed character.
-	var tail := -facing * (14.0 + absf(velocity.x) * 0.04)
-	draw_colored_polygon(
-		PackedVector2Array(
-			[Vector2(-9, -28), Vector2(tail, -20), Vector2(tail - facing * 9, -9), Vector2(-4, -14)]
-		),
-		Color("4d8d85")
-	)
-	draw_line(Vector2(-6, -9), Vector2(-7 - stride * 5, -2), Color("a0bdb0"), 4.0, true)
-	draw_line(Vector2(6, -9), Vector2(7 + stride * 5, -2), Color("a0bdb0"), 4.0, true)
-	draw_colored_polygon(
-		PackedVector2Array(
-			[Vector2(-9, -33), Vector2(8, -33), Vector2(16, -8), Vector2(1, -5), Vector2(-15, -9)]
-		),
-		Color("335d60")
-	)
-	draw_line(Vector2(0, -29), Vector2(1, -10), Color("6ba99a"), 1.5, true)
-	draw_circle(Vector2(0, -36), 12.5, Color("d2dfb6"))
-	draw_arc(Vector2(0, -36), 12.5, 0.1, PI - 0.1, 16, Color("84b6a4"), 2.0, true)
-	draw_line(Vector2(0, -47), Vector2(3, -56), Color("b2d7b0"), 2.0, true)
-	draw_colored_polygon(
-		PackedVector2Array([Vector2(3, -51), Vector2(12, -58), Vector2(12, -51), Vector2(3, -48)]),
-		Color("73ba99")
-	)
-	draw_circle(Vector2(facing * 5, -37), 2.5, Color("153a43"))
-	draw_circle(Vector2(facing * 5, -38), 0.8, Color("f5f3ce"))
-	draw_line(Vector2(facing * 10, -23), Vector2(facing * 19, -18), Color("c4d9b1"), 3.0, true)
-	draw_circle(Vector2(facing * 20, -17), 4.0, Color("f2cd87"))
-	draw_set_transform(Vector2.ZERO)
-	if _attack_time > 0.0:
-		var t := 1.0 - _attack_time / 0.22
-		var center := Vector2(_attack_direction * 18, -27)
-		var angle := 0.0 if _attack_direction > 0 else PI
-		draw_arc(
-			center,
-			54,
-			angle - 1.1 + t * 0.8,
-			angle + 0.7 + t * 0.6,
-			22,
-			Color(0.88, 0.96, 0.73, 1.0 - t),
-			5.0,
-			true
-		)
-		draw_arc(
-			center,
-			44,
-			angle - 1.1 + t * 0.8,
-			angle + 0.7 + t * 0.6,
-			22,
-			Color(0.5, 0.88, 0.75, 0.5 * (1.0 - t)),
-			11.0,
-			true
-		)
+	draw_circle(Vector2(0, -29), 44.0, Color(0.40, 0.85, 0.72, 0.045))
+	draw_circle(Vector2(0, -29), 28.0, Color(0.40, 0.85, 0.72, 0.06))
+	if is_on_floor():
+		draw_set_transform(Vector2(0, -1), 0.0, Vector2(1.0, 0.22))
+		draw_circle(Vector2.ZERO, 16.0, Color(0.01, 0.03, 0.035, 0.4))
+		draw_set_transform(Vector2.ZERO)

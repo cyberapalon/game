@@ -1,0 +1,38 @@
+[
+  {
+    "name": "keeper_sheet",
+    "to": "assets/characters/keeper_sheet.png",
+    "generator": "built-in image_gen",
+    "sha256": "61e2eb7f60fcbd1894cd114ada897404e299a400a2d5496fbf9d8098a1537455"
+  },
+  {
+    "name": "moss_walker_sheet",
+    "to": "assets/characters/moss_walker_sheet.png",
+    "generator": "built-in image_gen",
+    "sha256": "3d802e05212ba7311837ee18c45d80c8f09dae8ae62f92810b4be260d1a680d5"
+  },
+  {
+    "name": "conservatory_atlas",
+    "to": "assets/environment/conservatory_source.png",
+    "generator": "built-in image_gen",
+    "sha256": "525e818be37dd4854d61bb170992ce13d81958992d50ec2ec8f0ddfeb08fd2d7"
+  },
+  {
+    "name": "conservatory_depth",
+    "to": "assets/backgrounds/conservatory_depth.png",
+    "generator": "built-in image_gen",
+    "sha256": "acac981b50bc57f3d29670a97e05876e139c5c9a5077ecb150c0d72a5782cd5c"
+  },
+  {
+    "name": "conservatory_roots",
+    "to": "assets/backgrounds/conservatory_roots.png",
+    "generator": "built-in image_gen",
+    "sha256": "ba7d707da9a0f62578a20b058e4bfe607204082015414d267a279641cc900884"
+  },
+  {
+    "name": "garden_vfx",
+    "to": "assets/vfx/garden_sheet.png",
+    "generator": "built-in image_gen",
+    "sha256": "53c147c58565746d7df71d94b7996c13ee9ebce7f947ff4dcfc5b17f3dd9ffd2"
+  }
+]

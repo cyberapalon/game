@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/conservatory_source.png" id="1"]
+
+[resource]
+atlas = ExtResource("1")
+region = Rect2(29, 659, 271, 277)
+margin = Rect2(25, 28, 34, 28)
+filter_clip = true

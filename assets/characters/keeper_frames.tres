@@ -1,0 +1,179 @@
+[gd_resource type="SpriteFrames" load_steps=26 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/keeper_sheet.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="idle0"]
+atlas = ExtResource("1")
+region = Rect2(55, 24, 174, 222)
+filter_clip = true
+margin = Rect2(55, 18, 82, 34)
+
+
+[sub_resource type="AtlasTexture" id="idle1"]
+atlas = ExtResource("1")
+region = Rect2(313, 21, 167, 225)
+filter_clip = true
+margin = Rect2(57, 15, 89, 31)
+
+
+[sub_resource type="AtlasTexture" id="idle2"]
+atlas = ExtResource("1")
+region = Rect2(564, 23, 171, 223)
+filter_clip = true
+margin = Rect2(52, 17, 85, 33)
+
+
+[sub_resource type="AtlasTexture" id="idle3"]
+atlas = ExtResource("1")
+region = Rect2(824, 23, 167, 223)
+filter_clip = true
+margin = Rect2(56, 17, 89, 33)
+
+
+[sub_resource type="AtlasTexture" id="run0"]
+atlas = ExtResource("1")
+region = Rect2(41, 288, 207, 204)
+filter_clip = true
+margin = Rect2(41, 36, 49, 52)
+
+
+[sub_resource type="AtlasTexture" id="run1"]
+atlas = ExtResource("1")
+region = Rect2(280, 283, 226, 210)
+filter_clip = true
+margin = Rect2(24, 30, 30, 46)
+
+
+[sub_resource type="AtlasTexture" id="run2"]
+atlas = ExtResource("1")
+region = Rect2(530, 289, 238, 203)
+filter_clip = true
+margin = Rect2(18, 37, 18, 53)
+
+
+[sub_resource type="AtlasTexture" id="run3"]
+atlas = ExtResource("1")
+region = Rect2(803, 288, 201, 205)
+filter_clip = true
+margin = Rect2(35, 35, 55, 51)
+
+
+[sub_resource type="AtlasTexture" id="jump0"]
+atlas = ExtResource("1")
+region = Rect2(59, 526, 138, 234)
+filter_clip = true
+margin = Rect2(59, 6, 118, 22)
+
+
+[sub_resource type="AtlasTexture" id="jump1"]
+atlas = ExtResource("1")
+region = Rect2(302, 515, 152, 217)
+filter_clip = true
+margin = Rect2(46, 23, 104, 39)
+
+
+[sub_resource type="AtlasTexture" id="jump2"]
+atlas = ExtResource("1")
+region = Rect2(544, 519, 162, 216)
+filter_clip = true
+margin = Rect2(32, 24, 94, 40)
+
+
+[sub_resource type="AtlasTexture" id="jump3"]
+atlas = ExtResource("1")
+region = Rect2(802, 532, 152, 227)
+filter_clip = true
+margin = Rect2(34, 13, 104, 29)
+
+
+[sub_resource type="AtlasTexture" id="fall0"]
+atlas = ExtResource("1")
+region = Rect2(52, 791, 151, 228)
+filter_clip = true
+margin = Rect2(52, 12, 105, 28)
+
+
+[sub_resource type="AtlasTexture" id="fall1"]
+atlas = ExtResource("1")
+region = Rect2(271, 787, 167, 220)
+filter_clip = true
+margin = Rect2(15, 20, 89, 36)
+
+
+[sub_resource type="AtlasTexture" id="fall2"]
+atlas = ExtResource("1")
+region = Rect2(535, 802, 164, 196)
+filter_clip = true
+margin = Rect2(23, 44, 92, 60)
+
+
+[sub_resource type="AtlasTexture" id="fall3"]
+atlas = ExtResource("1")
+region = Rect2(784, 821, 170, 200)
+filter_clip = true
+margin = Rect2(16, 40, 86, 56)
+
+
+[sub_resource type="AtlasTexture" id="attack0"]
+atlas = ExtResource("1")
+region = Rect2(51, 1055, 177, 198)
+filter_clip = true
+margin = Rect2(51, 42, 79, 58)
+
+
+[sub_resource type="AtlasTexture" id="attack1"]
+atlas = ExtResource("1")
+region = Rect2(279, 1057, 233, 200)
+filter_clip = true
+margin = Rect2(23, 40, 23, 56)
+
+
+[sub_resource type="AtlasTexture" id="attack2"]
+atlas = ExtResource("1")
+region = Rect2(519, 1053, 249, 204)
+filter_clip = true
+margin = Rect2(7, 36, 7, 52)
+
+
+[sub_resource type="AtlasTexture" id="attack3"]
+atlas = ExtResource("1")
+region = Rect2(805, 1055, 191, 202)
+filter_clip = true
+margin = Rect2(37, 38, 65, 54)
+
+
+[sub_resource type="AtlasTexture" id="dash0"]
+atlas = ExtResource("1")
+region = Rect2(18, 1311, 238, 183)
+filter_clip = true
+margin = Rect2(18, 57, 18, 73)
+
+
+[sub_resource type="AtlasTexture" id="dash1"]
+atlas = ExtResource("1")
+region = Rect2(256, 1330, 250, 153)
+filter_clip = true
+margin = Rect2(0, 87, 6, 103)
+
+
+[sub_resource type="AtlasTexture" id="dash2"]
+atlas = ExtResource("1")
+region = Rect2(520, 1312, 246, 171)
+filter_clip = true
+margin = Rect2(8, 69, 10, 85)
+
+
+[sub_resource type="AtlasTexture" id="dash3"]
+atlas = ExtResource("1")
+region = Rect2(776, 1317, 237, 178)
+filter_clip = true
+margin = Rect2(8, 62, 19, 78)
+
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("idle0")}, {"duration": 1.0, "texture": SubResource("idle1")}, {"duration": 1.0, "texture": SubResource("idle2")}, {"duration": 1.0, "texture": SubResource("idle3")}], "loop": true, "name": &"idle", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("run0")}, {"duration": 1.0, "texture": SubResource("run1")}, {"duration": 1.0, "texture": SubResource("run2")}, {"duration": 1.0, "texture": SubResource("run3")}], "loop": true, "name": &"run", "speed": 12.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("jump0")}, {"duration": 1.0, "texture": SubResource("jump1")}, {"duration": 1.0, "texture": SubResource("jump2")}, {"duration": 1.0, "texture": SubResource("jump3")}], "loop": false, "name": &"jump", "speed": 8.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("fall0")}, {"duration": 1.0, "texture": SubResource("fall1")}, {"duration": 1.0, "texture": SubResource("fall2")}, {"duration": 1.0, "texture": SubResource("fall3")}], "loop": false, "name": &"fall", "speed": 8.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("attack0")}, {"duration": 1.0, "texture": SubResource("attack1")}, {"duration": 1.0, "texture": SubResource("attack2")}, {"duration": 1.0, "texture": SubResource("attack3")}], "loop": false, "name": &"attack", "speed": 18.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("dash0")}, {"duration": 1.0, "texture": SubResource("dash1")}, {"duration": 1.0, "texture": SubResource("dash2")}, {"duration": 1.0, "texture": SubResource("dash3")}], "loop": false, "name": &"dash", "speed": 22.0}]
