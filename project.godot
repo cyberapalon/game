@@ -1,0 +1,40 @@
+; Lumen Hollow: an original, browser-first Godot prototype.
+config_version=5
+
+[application]
+config/name="Lumen Hollow"
+config/description="Wake a sleeping garden. An original metroidvania vertical slice."
+run/main_scene="res://levels/conservatory/conservatory.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://common/icon.svg"
+
+[autoload]
+Progress="*res://common/progress.gd"
+Sound="*res://common/sound.gd"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.025, 0.055, 0.07, 1)
+textures/default_filters/use_nearest_mipmap_filter=false
+
+[physics]
+common/physics_ticks_per_second=60
+2d/default_gravity=1550.0
+
+[layer_names]
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
+2d_physics/layer_4="PlayerAttack"
+
+[audio]
+driver/enable_input=false
