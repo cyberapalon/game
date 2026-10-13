@@ -1,0 +1,30 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "[gdscript]": {
+    "editor.defaultFormatter": "geequlim.godot-tools",
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "godotTools.editorPath.godot4": "/usr/local/bin/godot",
+  "godotTools.lsp.headless": true,
+  "remote.autoForwardPorts": true,
+  "remote.autoForwardPortsSource": "process",
+  "remote.restoreForwardedPorts": false,
+  "remote.portsAttributes": {
+    "8000": {
+      "label": "Godot Web Preview",
+      "onAutoForward": "silent"
+    }
+  },
+  "search.exclude": {
+    "**/.godot": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "chatgpt.openOnStartup": false
+}

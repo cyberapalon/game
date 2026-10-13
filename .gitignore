@@ -1,0 +1,20 @@
+# Godot generated state (do not ignore project.godot, scenes, or assets)
+.godot/
+.import/
+.mono/
+
+# Build artifacts and local test output
+build/
+dist/
+coverage/
+*.log
+
+# Machine-specific settings and secrets
+.env*
+!.env.example
+.codex/config.toml
+.agents/mcp_config.json
+.DS_Store
+.idea/
+*.swp
+*.tmp
