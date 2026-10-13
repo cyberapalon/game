@@ -152,19 +152,55 @@ mkdir -p "$CODEX_HOME"
 if [[ ! -f "$CODEX_HOME/config.toml" ]]; then
   umask 077
   cat > "$CODEX_HOME/config.toml" <<'CODEX_CONFIG'
-# Initial defaults based on the separate, disposable ATL-style VM workflow.
-# Codex has full access INSIDE this VM; do not put production credentials in it.
 model = "gpt-6.1-sol"
 model_reasoning_effort = "xhigh"
 model_verbosity = "low"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 web_search = "live"
-developer_instructions = "Always communicate with the user in Russian. Use English for code, names, identifiers, and files."
+personality = "pragmatic"
+service_tier = "default"
+mcp_oauth_credentials_store = "file"
+
+developer_instructions = "Always communicate with the user in Russian. Use English for everything else."
 
 [features]
 plugins = true
+remote_plugin = false
+memories = false
+apps = false
+hooks = true
+goals = true
+fast_mode = false
 multi_agent = true
+shell_snapshot = true
+
+[memories]
+generate_memories = false
+use_memories = false
+
+[analytics]
+enabled = false
+
+[feedback]
+enabled = false
+
+[otel]
+exporter = "none"
+metrics_exporter = "none"
+trace_exporter = "none"
+log_user_prompt = false
+
+[shell_environment_policy]
+inherit = "all"
+ignore_default_excludes = true
+
+[tui]
+status_line = ["model-with-reasoning", "used-tokens", "context-remaining", "five-hour-limit", "weekly-limit"]
+status_line_use_colors = true
+
+[projects."/home/user/app"]
+trust_level = "trusted"
 CODEX_CONFIG
 fi
 chmod 0600 "$CODEX_HOME/config.toml"
@@ -183,9 +219,9 @@ DEVELOPMENT
 fi
 
 echo '==> 6/6 Connecting GitHub and Codex (interactive, only if needed)'
-if ! gh auth status --active --hostname github.com >/dev/null 2>&1; then
-  gh auth login --hostname github.com --git-protocol https --web
-fi
+#if ! gh auth status --active --hostname github.com >/dev/null 2>&1; then
+#  gh auth login --hostname github.com --git-protocol https --web
+#fi
 if ! codex login status >/dev/null 2>&1; then
   codex login --device-auth
 fi
